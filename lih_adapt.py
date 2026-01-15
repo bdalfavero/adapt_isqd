@@ -11,6 +11,7 @@ import openfermion as of
 
 from qiskit import QuantumRegister, QuantumCircuit
 from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
+from qiskit.qasm2 import dumps
 import qiskit_ibm_runtime
 from qiskit_ibm_runtime import SamplerV2 as Sampler
 from qiskit_addon_sqd.fermion import diagonalize_fermionic_hamiltonian, solve_sci_batch, SCIResult
@@ -188,3 +189,14 @@ for bit_array in bit_arrays:
     print(approx_energy, err)
     energies.append(approx_energy)
     errors.append(err)
+
+qasm_strings = []
+for circuit in circuits:
+    isa_circuit = pass_manager.run(circuit)
+    qasm_str = dumps(isa_circuit)
+    qasm_strings.append(qasm_str)
+
+molec_name = "LiH"
+f = h5py.File(f"data/{molec_name}.hdf5", "w")
+f.create_dataset("energies", data=np.array(energies))
+f.create_dataset("circuit_qasm", data=qasm_strings)
