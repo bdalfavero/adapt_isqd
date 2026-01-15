@@ -52,7 +52,10 @@ from_scf(mf, lih_fname)
 
 # Read data from the FCIDUMP file.
 h_fcidump, norb, nelec = hamiltonian_from_fcidump(lih_fname)
-h = FermionicHamiltonian(h_fcidump, "atp", nelec)
+h = FermionicHamiltonian(
+    h_fcidump, "atp", nelec,
+    diag_mode="quimb", max_mpo_bond=300, max_mps_bond=300
+)
 nq = h.n
 print(f"Hamiltonian has {nq} qubits.")
 
