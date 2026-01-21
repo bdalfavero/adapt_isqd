@@ -32,7 +32,10 @@ sampler = Sampler(computer)
 molec_name = "atp_0_be1_f13"
 fname = f"data/atp_0_fcidump/{molec_name}"
 h_fcidump, norb, nelec = hamiltonian_from_fcidump(fname)
-h = FermionicHamiltonian(h_fcidump, "atp", nelec)
+h = FermionicHamiltonian(
+    h_fcidump, "atp", nelec,
+    diag_mode="quimb", max_mpo_bond=400, max_mps_bond=15
+)
 print(f"Hamiltonian has {h.n} qubits.")
 nq = h.n
 

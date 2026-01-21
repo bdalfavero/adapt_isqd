@@ -1,4 +1,5 @@
 from copy import deepcopy
+from os.path import isdir
 from functools import partial
 import h5py
 import numpy as np
@@ -43,10 +44,18 @@ mol.build(
 mf = pyscf.scf.RHF(mol)
 mf.kernel()
 lih_fname = "data/lih.fcidump"
+
+assert isdir("data"), "You must create the ./data/ directory."
+
+# Store the data to an FCIDUMP file.
 from_scf(mf, lih_fname)
 
+# Read data from the FCIDUMP file.
 h_fcidump, norb, nelec = hamiltonian_from_fcidump(lih_fname)
-h = FermionicHamiltonian(h_fcidump, "atp", nelec)
+h = FermionicHamiltonian(
+    h_fcidump, "atp", nelec,
+    diag_mode="quimb", max_mpo_bond=300, max_mps_bond=300
+)
 nq = h.n
 print(f"Hamiltonian has {nq} qubits.")
 
