@@ -125,4 +125,5 @@ for circuit in circuits:
 
 f = h5py.File(f"data/atp_0_be1_f0_circuits.hdf5", "w")
 f.create_dataset("adapt_energies", data=np.array(adapt_energies))
+f.create_dataset("circuits", data=circuit_qasm_strs)
 f.close()
