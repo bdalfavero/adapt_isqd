@@ -123,6 +123,6 @@ for circuit in circuits:
     qasm_str = dumps(isa_circuit)
     circuit_qasm_strs.append(qasm_str)
 
-f = h5py.File(f"data/{lih_fname}_circuits.hdf5", "w")
+f = h5py.File(f"data/atp_0_be1_f0_circuits.hdf5", "w")
 f.create_dataset("adapt_energies", data=np.array(adapt_energies))
 f.close()
