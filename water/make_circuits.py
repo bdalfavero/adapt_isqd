@@ -79,8 +79,8 @@ with open("data/h_qiskit.pkl", "wb") as f:
 
 pool = DVG_CEO(mol_of)
 
-max_mpo_bond = 200
-adapt_mps_bond = 10
+max_mpo_bond = args.mpo_bond
+adapt_mps_bond = args.mps_bond
 my_adapt = TensorNetAdapt(
     pool=pool,
     molecule=mol_of,
@@ -97,7 +97,7 @@ my_adapt.initialize()
 
 circuits = []
 adapt_energies = []
-for i in range(2):
+for i in range(args.num_iters):
     print(f"On iteration {i}.")
     my_adapt.run_iteration()
     data = my_adapt.data
@@ -108,9 +108,7 @@ for i in range(2):
     circuit.measure_all()
     circuits.append(circuit)
     adapt_energies.append(my_adapt.energy)
+    dump(circuit, f"data/h2o_circuit_{i}.qasm")
 
 adapt_energies = np.array(adapt_energies)
 np.savetxt("data/h2o_adapt_energies.txt", adapt_energies)
-
-for i, circuit in enumerate(circuits):
-    dump(circuit, f"data/h2o_circuit_{i}.qasm")
