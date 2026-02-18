@@ -1,3 +1,4 @@
+import argparse
 import pickle as pkl
 import h5py
 
@@ -16,6 +17,12 @@ import qiskit_ibm_runtime
 from adaptvqe.convert import cirq_pauli_sum_to_qiskit_pauli_op
 from adaptvqe.pools import DVG_CEO
 from adaptvqe.algorithms.adapt_vqe import LinAlgAdapt, TensorNetAdapt
+
+parser = argparse.ArgumentParser()
+parser.add_argument("num-iters", type=int, help="Number of ADAPT iterations.")
+parser.add_argument("--mpo-bond", type=int, default=200, help="Max bond dim of the MPO.")
+parser.add_argument("--mps-bond", type=int, default=20, help="Bond dimension of the MPS.")
+args = parser.parse_args()
 
 mol = pyscf.gto.Mole()
 geom = of.chem.geometry_from_pubchem("water")
