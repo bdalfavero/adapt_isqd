@@ -19,7 +19,7 @@ from adaptvqe.pools import DVG_CEO
 from adaptvqe.algorithms.adapt_vqe import LinAlgAdapt, TensorNetAdapt
 
 parser = argparse.ArgumentParser()
-parser.add_argument("num-iters", type=int, help="Number of ADAPT iterations.")
+parser.add_argument("num_iters", type=int, help="Number of ADAPT iterations.")
 parser.add_argument("--mpo-bond", type=int, default=200, help="Max bond dim of the MPO.")
 parser.add_argument("--mps-bond", type=int, default=20, help="Bond dimension of the MPS.")
 args = parser.parse_args()
